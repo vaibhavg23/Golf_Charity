@@ -1,3 +1,4 @@
+import "./fonts.css";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { BillingProvider } from "@/context/BillingContext";
