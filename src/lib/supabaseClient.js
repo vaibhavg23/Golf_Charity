@@ -49,7 +49,7 @@ const DEFAULT_CHARITIES = [
     name: 'Cardiac Health Research',
     description: 'Funding ground-breaking clinical trials, purchasing defibrillators for local community spaces, and running awareness events.',
     logo_url: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=150&h=150&fit=crop',
-    cover_image_url: 'https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?w=800&h=400&fit=crop',
+    cover_image_url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&h=400&fit=crop',
     website_url: 'https://cardiacresearch.org',
     is_featured: true,
     upcoming_events: [
@@ -62,7 +62,28 @@ const DEFAULT_CHARITIES = [
 const seedMockData = () => {
   if (typeof window === 'undefined') return;
 
-  if (!localStorage.getItem('mock_db_charities')) {
+  const MOCK_DB_VERSION = 'v6_force_reset_charities_real_images';
+  if (localStorage.getItem('mock_db_version') !== MOCK_DB_VERSION) {
+    localStorage.removeItem('mock_db_charities');
+    localStorage.setItem('mock_db_version', MOCK_DB_VERSION);
+  }
+
+  const storedCharities = localStorage.getItem('mock_db_charities');
+  let reseedCharities = false;
+  if (storedCharities) {
+    try {
+      const parsed = JSON.parse(storedCharities);
+      if (!Array.isArray(parsed) || parsed.some(c => !c.cover_image_url || c.cover_image_url === '' || !c.logo_url || c.logo_url === '')) {
+        reseedCharities = true;
+      }
+    } catch (e) {
+      reseedCharities = true;
+    }
+  } else {
+    reseedCharities = true;
+  }
+
+  if (reseedCharities) {
     localStorage.setItem('mock_db_charities', JSON.stringify(DEFAULT_CHARITIES));
   }
 

@@ -15,7 +15,7 @@ const DEFAULT_CHARITIES = [
 ];
 
 export default function DashboardGuard({ children, requireAdmin = false }) {
-  const { user, profile, loading } = useAuth();
+  const { user, profile, loading, signOut } = useAuth();
   const { mockSubscribe, processing } = useBilling();
   const router = useRouter();
 
@@ -143,10 +143,12 @@ export default function DashboardGuard({ children, requireAdmin = false }) {
             <div className="grid grid-cols-2 gap-4">
               <div
                 onClick={() => setTier('monthly')}
-                className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setTier('monthly'); } }}
+                tabIndex={0}
+                className={`p-3 rounded-lg border text-center cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-primary ${
                   tier === 'monthly'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-white/10 hover:border-white/20 text-text-muted'
+                    : 'border-white/10 hover:border-white/20 text-text-muted hover:text-white'
                 }`}
               >
                 <div className="text-xs font-bold uppercase">Monthly Plan</div>
@@ -155,10 +157,12 @@ export default function DashboardGuard({ children, requireAdmin = false }) {
 
               <div
                 onClick={() => setTier('yearly')}
-                className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setTier('yearly'); } }}
+                tabIndex={0}
+                className={`p-3 rounded-lg border text-center cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-primary ${
                   tier === 'yearly'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-white/10 hover:border-white/20 text-text-muted'
+                    : 'border-white/10 hover:border-white/20 text-text-muted hover:text-white'
                 }`}
               >
                 <div className="text-xs font-bold uppercase">Yearly Plan</div>
@@ -218,9 +222,20 @@ export default function DashboardGuard({ children, requireAdmin = false }) {
             </button>
 
             <div className="text-center mt-4">
-              <Link href="/login" className="text-xs text-text-muted hover:underline">
+              <button
+                onClick={async () => {
+                  try {
+                    await signOut();
+                    router.push('/login');
+                  } catch (e) {
+                    console.error('Sign out error:', e);
+                    router.push('/login');
+                  }
+                }}
+                className="text-xs text-text-muted hover:underline cursor-pointer bg-transparent border-none p-0 inline-block mx-auto font-medium"
+              >
                 Sign in with another account
-              </Link>
+              </button>
             </div>
           </div>
         </div>

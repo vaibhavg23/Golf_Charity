@@ -48,7 +48,7 @@ const DEFAULT_CHARITIES = [
     name: 'Cardiac Health Research',
     description: 'Funding ground-breaking clinical trials, purchasing defibrillators for local community spaces, and running awareness events.',
     logo_url: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=150&h=150&fit=crop',
-    cover_image_url: 'https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?w=800&h=400&fit=crop',
+    cover_image_url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&h=400&fit=crop',
     website_url: 'https://cardiacresearch.org',
     upcoming_events: [
       { id: 'e7', name: 'Heart Health Screening Day', date: '2026-06-25', location: 'Centennial Golf Lodge', description: 'Free blood pressure and heart rate variability checks for members and public.' },
@@ -261,7 +261,7 @@ export default function CharitiesPage() {
                         rel="noreferrer"
                         className="text-[11px] text-primary hover:underline"
                       >
-                        Visit Website &nearr;
+                        Visit Website ↗
                       </a>
                     )}
                   </div>

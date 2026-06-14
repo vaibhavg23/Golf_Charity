@@ -869,7 +869,7 @@ export default function AdminPage() {
                             <div className="flex justify-between items-center text-[10px]">
                               <span className="text-text-muted">Submitted Screenshot URL:</span>
                               <a href={entrant.verification_proof_url} target="_blank" rel="noreferrer" className="text-primary hover:underline font-bold">
-                                Open Link &nearr;
+                                Open Link ↗
                               </a>
                             </div>
                             {/* Render image block directly as verification review helper */}

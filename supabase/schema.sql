@@ -280,7 +280,7 @@ VALUES
     'Cardiac Health Research',
     'Funding ground-breaking clinical trials, purchasing defibrillators for local community spaces, and running awareness events.',
     'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=150&h=150&fit=crop',
-    'https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?w=800&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&h=400&fit=crop',
     'https://cardiacresearch.org',
     true,
     '[

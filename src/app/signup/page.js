@@ -180,10 +180,12 @@ export default function SignUpPage() {
             <div className="grid grid-cols-2 gap-4">
               <div
                 onClick={() => setTier('monthly')}
-                className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setTier('monthly'); } }}
+                tabIndex={0}
+                className={`p-3 rounded-lg border text-center cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-primary ${
                   tier === 'monthly'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-white/10 hover:border-white/20 text-text-muted'
+                    : 'border-white/10 hover:border-white/20 text-text-muted hover:text-white'
                 }`}
               >
                 <div className="text-xs font-bold uppercase">Monthly Plan</div>
@@ -192,10 +194,12 @@ export default function SignUpPage() {
 
               <div
                 onClick={() => setTier('yearly')}
-                className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setTier('yearly'); } }}
+                tabIndex={0}
+                className={`p-3 rounded-lg border text-center cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-primary ${
                   tier === 'yearly'
                     ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-white/10 hover:border-white/20 text-text-muted'
+                    : 'border-white/10 hover:border-white/20 text-text-muted hover:text-white'
                 }`}
               >
                 <div className="text-xs font-bold uppercase">Yearly Plan</div>
