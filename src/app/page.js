@@ -75,20 +75,12 @@ export default function HomePage() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          {user ? (
-            <Link href="/dashboard" className="py-2 px-5 btn-premium text-xs rounded-full">
-              Dashboard
-            </Link>
-          ) : (
-            <>
-              <Link href="/login" className="text-xs text-text-muted hover:text-white font-semibold px-3 py-2 transition-colors">
-                Log In
-              </Link>
-              <Link href="/signup" className="py-2 px-5 btn-premium text-xs rounded-full">
-                Join Now
-              </Link>
-            </>
-          )}
+          <Link href="/login" className="text-xs text-text-muted hover:text-white font-semibold px-3 py-2 transition-colors">
+            Log In
+          </Link>
+          <Link href="/signup" className="py-2 px-5 btn-premium text-xs rounded-full">
+            Join Now
+          </Link>
         </div>
       </header>
 

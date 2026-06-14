@@ -147,119 +147,53 @@ export default function CharitiesPage() {
           </span>
         </Link>
         <div className="flex space-x-4 items-center">
-          <Link href="/" className="text-xs text-text-muted hover:text-white font-semibold">
+          <Link href="/" className="text-xs text-text-muted hover:text-white font-semibold px-2 py-1">
             Home
           </Link>
-          {user ? (
-            <Link href="/dashboard" className="py-1.5 px-4 btn-premium text-xs rounded-full">
-              Dashboard
-            </Link>
-          ) : (
-            <Link href="/signup" className="py-1.5 px-4 btn-premium text-xs rounded-full">
-              Join Now
-            </Link>
-          )}
+          <Link href="/login" className="text-xs text-text-muted hover:text-white font-semibold px-2 py-1">
+            Log In
+          </Link>
+          <Link href="/signup" className="py-1.5 px-4 btn-premium text-xs rounded-full">
+            Join Now
+          </Link>
         </div>
       </header>
 
       {/* Content */}
-      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-6 py-12 z-10 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Side: Directory search and list (Col span 2) */}
-        <div className="lg:col-span-2 space-y-6">
-          <div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-gradient-hero mb-2">
-              Charity Directory
-            </h1>
-            <p className="text-text-muted text-sm">
-              Discover local and global initiatives, view upcoming fundraising events, and contribute directly.
-            </p>
-          </div>
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-6 py-12 z-10 w-full">
+        {selectedCharity ? (
+          /* Detailed View for Selected Charity */
+          <div className="max-w-2xl mx-auto space-y-6">
+            <button
+              onClick={() => setSelectedCharity(null)}
+              className="flex items-center text-xs font-bold text-primary hover:text-primary-hover hover:underline cursor-pointer bg-transparent border-none p-0 transition-colors"
+            >
+              &larr; Back to Directory
+            </button>
 
-          {/* Search bar */}
-          <div className="w-full">
-            <input
-              type="text"
-              placeholder="Search charities by name or mission..."
-              className="w-full p-3.5 glass-input text-sm"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-
-          {/* Listings */}
-          {loading ? (
-            <div className="text-center py-10 text-text-muted animate-pulse">Loading Directory...</div>
-          ) : filteredCharities.length === 0 ? (
-            <div className="text-center py-12 text-text-muted border border-white/5 rounded-xl bg-white/5">
-              No charities found matching "{searchQuery}"
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredCharities.map((charity) => (
-                <div
-                  key={charity.id}
-                  onClick={() => setSelectedCharity(charity)}
-                  className={`glass-card rounded-xl overflow-hidden border cursor-pointer flex flex-col justify-between transition-all h-full ${
-                    selectedCharity?.id === charity.id
-                      ? 'border-primary shadow-lg shadow-primary/5'
-                      : 'border-white/5'
-                  }`}
-                >
-                  <div className="h-32 bg-zinc-900 overflow-hidden relative">
-                    <img src={charity.cover_image_url} alt={charity.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center space-x-3 mb-2">
-                        <img src={charity.logo_url} alt={charity.name} className="h-8 w-8 rounded-full border border-white/10" />
-                        <h3 className="text-base font-bold text-white leading-tight">{charity.name}</h3>
-                      </div>
-                      <p className="text-text-muted text-xs line-clamp-3 leading-relaxed mb-4">
-                        {charity.description}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between text-xs border-t border-white/5 pt-3 mt-2">
-                      <span className="text-[10px] text-primary bg-primary/10 border border-primary/20 py-0.5 px-2 rounded-full font-bold uppercase">
-                        Active Partner
-                      </span>
-                      <span className="text-white font-semibold hover:underline">
-                        View Details &rarr;
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Right Side: Charity profile detail & direct donation (Col span 1) */}
-        <div className="lg:col-span-1">
-          {selectedCharity ? (
-            <div className="glass-card rounded-2xl border border-white/10 overflow-hidden sticky top-6">
-              <div className="h-40 bg-zinc-900 relative">
+            <div className="glass-card rounded-2xl border border-white/10 overflow-hidden">
+              <div className="h-48 md:h-64 bg-zinc-900 relative">
                 <img src={selectedCharity.cover_image_url} alt={selectedCharity.name} className="w-full h-full object-cover" />
                 <button
                   onClick={() => setSelectedCharity(null)}
-                  className="absolute top-3 right-3 h-8 w-8 rounded-full bg-black/60 text-white flex items-center justify-center font-bold text-xs hover:bg-black"
+                  className="absolute top-3 right-3 h-8 w-8 rounded-full bg-black/60 text-white flex items-center justify-center font-bold text-xs hover:bg-black transition-colors"
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="p-6 space-y-6">
+              <div className="p-6 md:p-8 space-y-6">
                 {/* Header */}
-                <div className="flex items-start space-x-3">
-                  <img src={selectedCharity.logo_url} alt={selectedCharity.name} className="h-12 w-12 rounded-full border border-white/10" />
+                <div className="flex items-start space-x-4">
+                  <img src={selectedCharity.logo_url} alt={selectedCharity.name} className="h-14 w-14 rounded-full border border-white/10 object-cover" />
                   <div>
-                    <h2 className="text-xl font-bold text-white leading-tight">{selectedCharity.name}</h2>
+                    <h2 className="text-2xl font-extrabold text-white leading-tight">{selectedCharity.name}</h2>
                     {selectedCharity.website_url && (
                       <a
                         href={selectedCharity.website_url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[11px] text-primary hover:underline"
+                        className="text-xs text-primary hover:underline inline-flex items-center mt-1"
                       >
                         Visit Website ↗
                       </a>
@@ -270,22 +204,22 @@ export default function CharitiesPage() {
                 {/* Mission */}
                 <div className="space-y-1">
                   <h4 className="text-[10px] font-bold uppercase tracking-wider text-text-muted">About Mission</h4>
-                  <p className="text-text-muted text-xs leading-relaxed">{selectedCharity.description}</p>
+                  <p className="text-text-muted text-sm leading-relaxed">{selectedCharity.description}</p>
                 </div>
 
                 {/* Upcoming Events */}
                 {selectedCharity.upcoming_events && selectedCharity.upcoming_events.length > 0 && (
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold uppercase tracking-wider text-text-muted">Upcoming Events</h4>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {selectedCharity.upcoming_events.map((event, idx) => (
-                        <div key={idx} className="p-3 rounded-lg bg-white/5 border border-white/5 space-y-1 text-xs">
+                        <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1.5 text-xs">
                           <div className="flex justify-between font-bold text-white">
                             <span>{event.name}</span>
-                            <span className="text-primary font-medium">{event.date}</span>
+                            <span className="text-primary font-semibold">{event.date}</span>
                           </div>
                           <div className="text-[10px] text-text-muted">{event.location}</div>
-                          <p className="text-[11px] text-text-muted font-normal mt-1 leading-normal">
+                          <p className="text-[11px] text-text-muted font-normal mt-1 leading-relaxed">
                             {event.description}
                           </p>
                         </div>
@@ -295,7 +229,7 @@ export default function CharitiesPage() {
                 )}
 
                 {/* Direct Donation Form */}
-                <div className="border-t border-white/5 pt-5 space-y-4">
+                <div className="border-t border-white/5 pt-6 space-y-4">
                   <div className="text-xs font-bold uppercase tracking-wider text-text-muted text-center">
                     Make a Direct Contribution
                   </div>
@@ -354,17 +288,75 @@ export default function CharitiesPage() {
                     Direct donations are sent directly to the charity and are not tied to draw entries.
                   </p>
                 </div>
-
               </div>
             </div>
-          ) : (
-            <div className="glass-card rounded-2xl border border-white/5 p-8 text-center text-text-muted text-sm h-full flex flex-col justify-center items-center space-y-3">
-              <span className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center text-xl">ℹ️</span>
-              <div>Select a charity from the list to view its complete profile, events directory, and make direct donations.</div>
+          </div>
+        ) : (
+          /* Directory List View (Full Width) */
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-4xl font-extrabold tracking-tight text-gradient-hero mb-2">
+                Charity Directory
+              </h1>
+              <p className="text-text-muted text-sm">
+                Discover local and global initiatives, view upcoming fundraising events, and contribute directly.
+              </p>
             </div>
-          )}
-        </div>
 
+            {/* Search bar */}
+            <div className="w-full">
+              <input
+                type="text"
+                placeholder="Search charities by name or mission..."
+                className="w-full p-3.5 glass-input text-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            {/* Listings */}
+            {loading ? (
+              <div className="text-center py-10 text-text-muted animate-pulse">Loading Directory...</div>
+            ) : filteredCharities.length === 0 ? (
+              <div className="text-center py-12 text-text-muted border border-white/5 rounded-xl bg-white/5">
+                No charities found matching "{searchQuery}"
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCharities.map((charity) => (
+                  <div
+                    key={charity.id}
+                    onClick={() => setSelectedCharity(charity)}
+                    className="glass-card rounded-xl overflow-hidden border border-white/5 cursor-pointer flex flex-col justify-between transition-all h-full hover:border-primary/45 hover:shadow-lg hover:shadow-primary/5"
+                  >
+                    <div className="h-32 bg-zinc-900 overflow-hidden relative">
+                      <img src={charity.cover_image_url} alt={charity.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-5 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center space-x-3 mb-2">
+                          <img src={charity.logo_url} alt={charity.name} className="h-8 w-8 rounded-full border border-white/10 object-cover" />
+                          <h3 className="text-base font-bold text-white leading-tight">{charity.name}</h3>
+                        </div>
+                        <p className="text-text-muted text-xs line-clamp-3 leading-relaxed mb-4">
+                          {charity.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between text-xs border-t border-white/5 pt-3 mt-2">
+                        <span className="text-[10px] text-primary bg-primary/10 border border-primary/20 py-0.5 px-2 rounded-full font-bold uppercase">
+                          Active Partner
+                        </span>
+                        <span className="text-white font-semibold hover:underline">
+                          View Details &rarr;
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
