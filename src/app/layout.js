@@ -11,7 +11,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased font-sans">
       <body className="min-h-full flex flex-col bg-dark-bg text-slate-200">
-        <a href="#main-content" className="dh-skip-link">Skip to content</a>
         <AuthProvider>
           <BillingProvider>
             {children}
