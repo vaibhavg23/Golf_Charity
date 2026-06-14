@@ -1,26 +1,225 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap');
 
+@theme {
+  --color-primary: #6fa37a;
+  --color-primary-hover: #3f6b54;
+  --color-gold: #cd8a4b;
+  --color-purple: #5b3f8a;
+  --color-dark-bg: #0a0a1a;
+  --color-dark-card: rgba(15, 23, 19, 0.55);
+  --color-dark-border: rgba(111, 163, 122, 0.15);
+  --color-text-main: #fafafa;
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+}
+
+/* Custom CSS Variables matching digitalheroesco.com */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --ink-0: #0a0a1a;
+  --moss-500: #6fa37a;
+  --moss-600: #3f6b54;
+  --moss-700: #24453a;
+  --moss-900: #0f1713;
+  --amber-500: #cd8a4b;
+  
+  --background: var(--ink-0);
+  --foreground: #fafafa;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Skip links & keyboard navigation */
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--moss-500);
+  outline-offset: 2px;
+}
+
+/* Grain Overlay (print-tactile high-end matte paper texture) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+}
+
+/* Custom Scrollbar (moss & ink) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink-0);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--moss-600);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--moss-500);
+}
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--moss-600) var(--ink-0);
+  scroll-behavior: smooth;
+}
+
+/* Editorial Serif styling */
+.serif {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+/* Glassmorphism custom classes matching digitalheroesco.com */
+.glass {
+  background: rgba(15, 23, 19, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(111, 163, 122, 0.15);
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(111, 163, 122, 0.12);
+}
+
+.glass-card {
+  background: rgba(15, 23, 19, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(111, 163, 122, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(111, 163, 122, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: rgba(15, 23, 19, 0.55);
+  border: 1px solid rgba(63, 107, 84, 0.28);
+  border-radius: 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--moss-500);
+  box-shadow: 0 0 0 3px rgba(111, 163, 122, 0.18);
+}
+
+/* Moss & Amber gold gradient text */
+.text-mossamber {
+  background: linear-gradient(135deg, var(--moss-500), var(--amber-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(135deg, #ffffff 30%, var(--moss-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, var(--amber-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Liquid backdrop background */
+.liquid-bg {
+  background:
+    radial-gradient(120% 80% at 75% 40%, rgba(155, 207, 160, 0.12) 0%, transparent 55%),
+    radial-gradient(80% 60% at 30% 85%, rgba(63, 107, 84, 0.2) 0%, transparent 60%),
+    radial-gradient(55% 55% at 82% 78%, rgba(16, 31, 24, 0.85) 0%, rgba(10, 10, 26, 1) 70%),
+    linear-gradient(180deg, #0a0f0c 0%, #0a0a1a 100%);
+}
+
+.bg-gradient-premium {
+  background: linear-gradient(135deg, rgba(91, 63, 138, 0.12) 0%, rgba(63, 107, 84, 0.08) 100%);
+}
+
+/* Interactive premium button overrides */
+.btn-premium {
+  position: relative;
+  background: var(--moss-600);
+  color: #fafafa !important;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(111, 163, 122, 0.25);
+  box-shadow: 0 4px 12px rgba(63, 107, 84, 0.15);
+}
+
+.btn-premium::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: 0.75s;
+  opacity: 0;
+}
+
+.btn-premium:hover::after {
+  left: 125%;
+  opacity: 1;
+}
+
+.btn-premium:hover {
+  background: var(--moss-500);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(111, 163, 122, 0.3);
+  border-color: rgba(111, 163, 122, 0.4);
 }
